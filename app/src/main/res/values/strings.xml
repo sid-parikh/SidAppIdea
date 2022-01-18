@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SidAppIdea</string>
+    <string name="btn_start">Start Match</string>
+    <string name="btn_acquire">Acquire Cargo</string>
+    <string name="btn_score">Score Upper Hub</string>
+    <string name="btn_end">End Match</string>
+    <string name="main_btn_undo">Undo</string>
+</resources>

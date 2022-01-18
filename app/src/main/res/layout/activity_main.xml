@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/configurable_text_actions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/configurable_chrono_match"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/main_btn_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/configurable_text_actions" />
+
+    <Button
+        android:id="@+id/main_btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_start"
+        app:layout_constraintBottom_toTopOf="@+id/main_btn_acquire"
+        app:layout_constraintEnd_toEndOf="@+id/configurable_chrono_match"
+        app:layout_constraintStart_toStartOf="@+id/configurable_chrono_match"
+        app:layout_constraintTop_toBottomOf="@+id/configurable_chrono_match" />
+
+    <Button
+        android:id="@+id/main_btn_acquire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_acquire"
+        app:layout_constraintBottom_toTopOf="@+id/main_btn_score"
+        app:layout_constraintEnd_toEndOf="@+id/main_btn_start"
+        app:layout_constraintStart_toStartOf="@+id/main_btn_start"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_start" />
+
+    <Button
+        android:id="@+id/main_btn_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_score"
+        app:layout_constraintBottom_toTopOf="@+id/main_btn_end"
+        app:layout_constraintEnd_toEndOf="@+id/main_btn_acquire"
+        app:layout_constraintStart_toStartOf="@+id/main_btn_acquire"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_acquire" />
+
+    <Button
+        android:id="@+id/main_btn_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_end"
+        app:layout_constraintBottom_toTopOf="@+id/main_btn_undo"
+        app:layout_constraintEnd_toEndOf="@+id/main_btn_score"
+        app:layout_constraintStart_toStartOf="@+id/main_btn_score"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_score" />
+
+    <Button
+        android:id="@+id/main_btn_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="@string/main_btn_undo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main_btn_end"
+        app:layout_constraintStart_toStartOf="@+id/main_btn_end"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_end" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
