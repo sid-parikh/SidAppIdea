@@ -3,12 +3,14 @@ package com.example.sidappidea;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +21,20 @@ public class ConfigurableActivity extends AppCompatActivity implements View.OnCl
     private static final String[] ACTIONS = {
             "START",
             "ACQ",
+            "LHUB",
             "UHUB",
             "STOP"
     };
+    private final List<Action> actions = new ArrayList<>();
+    Button start;
+    Button stop;
+    Button[] scores;
     // Chronometer
     private Chronometer chronometer;
-
     // ConstraintLayout
     private ConstraintLayout layout;
-
     // Actions List TextView
     private TextView actionsListView;
-    private final List<Action> actions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,41 +48,79 @@ public class ConfigurableActivity extends AppCompatActivity implements View.OnCl
         actionsListView = (TextView) findViewById(R.id.configurable_text_actions);
 
         // Save the Constraint Layout as a member variable
-        layout = (ConstraintLayout) findViewById(R.id.main_layout);
+        layout = (ConstraintLayout) findViewById(R.id.configurable_layout);
 
     }
 
-//    @Override
-//    public void onClick(View view) {
-//
-//        // Get the ID of the button that was clicked
-//        final int id = view.getId();
-//
-//        // Switch on the ID of the button that was clicked
-//        // Start button was clicked
-//        if (id == R.id.main_btn_start) {
-//            // Start the chronometer
-//            startMatch();
-//            // Acquire button was clicked
-//        } else if (id == R.id.main_btn_acquire) {
-//            // Acquire the ball
-//            acquireBall();
-//            // Score button was clicked
-//        } else if (id == R.id.main_btn_score) {
-//            // Score the ball
-//            scoreBall();
-//            // End button was clicked
-//        } else if (id == R.id.main_btn_end) {
-//            // End the match
-//            endMatch();
-//        } else if (id == R.id.main_btn_undo) {
-//            // Undo the last action
-//            if (actions.size() > 0) {
-//                actions.remove(actions.size() - 1);
-//            }
-//            // Update the TextView
-//            updateActionsListView();
-//        }
+    public void generateButtons() {
+        scores = new Button[ACTIONS.length];
+
+        ConstraintSet constraintSet = new ConstraintSet();
+
+        start = new Button(this);
+        start.setId(View.generateViewId());
+        start.setText("START");
+        start.setOnClickListener(this);
+        layout.addView(start);
+        scores[0] = start;
+        constraintSet.clone(layout);
+        constraintSet.connect(start.getId(), ConstraintSet.TOP, layout.getId(), ConstraintSet.TOP, 0);
+        constraintSet.connect(start.getId(), ConstraintSet.LEFT, layout.getId(), ConstraintSet.LEFT, 0);
+        constraintSet.connect(start.getId(), ConstraintSet.RIGHT, layout.getId(), ConstraintSet.RIGHT, 0);
+        constraintSet.applyTo(layout);
+
+
+        for (int i = 1; i < ACTIONS.length - 1; i++) {
+            Button btn = new Button(this);
+            btn.setId(View.generateViewId());
+            btn.setText(ACTIONS[i]);
+            btn.setOnClickListener(this);
+            scores[i] = btn;
+            layout.addView(btn);
+            constraintSet.clone(layout);
+            // Chain the buttons together
+            constraintSet.connect(btn.getId(), ConstraintSet.TOP, scores[i - 1].getId(), ConstraintSet.BOTTOM, 0);
+            constraintSet.connect(scores[i - 1].getId(), ConstraintSet.BOTTOM, btn.getId(), ConstraintSet.TOP, 0);
+            // Center the button horizontally
+            constraintSet.connect(btn.getId(), ConstraintSet.LEFT, layout.getId(), ConstraintSet.LEFT, 0);
+            constraintSet.connect(btn.getId(), ConstraintSet.RIGHT, layout.getId(), ConstraintSet.RIGHT, 0);
+            constraintSet.applyTo(layout);
+
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        // Get the ID of the button that was clicked
+        final int id = view.getId();
+
+        // Switch on the ID of the button that was clicked
+        // Start button was clicked
+        if (id == R.id.main_btn_start) {
+            // Start the chronometer
+            startMatch();
+            // Acquire button was clicked
+        } else if (id == R.id.main_btn_acquire) {
+            // Acquire the ball
+            acquireBall();
+            // Score button was clicked
+        } else if (id == R.id.main_btn_score) {
+            // Score the ball
+            scoreBall();
+            // End button was clicked
+        } else if (id == R.id.main_btn_end) {
+            // End the match
+            endMatch();
+        } else if (id == R.id.main_btn_undo) {
+            // Undo the last action
+            if (actions.size() > 0) {
+                actions.remove(actions.size() - 1);
+            }
+            // Update the TextView
+            updateActionsListView();
+        }
     }
 
     private void updateActionsListView() {
